@@ -1,16 +1,18 @@
-const mongoose =require('mongoose')
-const dotenv = require('dotenv').config()
+// utils/db.js
 
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-//export a function that connect to mongodb
-const db = () =>{
+dotenv.config();
+
+const db = () => {
     mongoose.connect(process.env.MONGO_URL)
-.then(()=>{
-    console.log("connected to mongodb")
-})
-.catch(()=>{
-    console.log("Error connecting with mongodb")
-})
-}
+        .then(() => {
+            console.log("Connected to MongoDB");
+        })
+        .catch((err) => {
+            console.error("Error connecting to MongoDB:", err.message);
+        });
+};
 
-module.exports =db;
+export default db;

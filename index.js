@@ -9,32 +9,40 @@
 //mongoose help you talk to the database its kind of a oda or orm
 //remove all thing after the ? in the mongodb dirver url as its not important to load the drivers 
 
-const cors =require('cors')
-const dotenv =require('dotenv').config()
-const express = require('express')
-const app = express()
-const port = process.env.PORT || 4000
-const db = require('./utils/db');
+// ✅ Use ESM-style imports
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import db from './utils/db.js'; // Add .js for ES module compatibility
 
+// ✅ Load env variables
+dotenv.config();
+
+// ✅ Set up Express app
+const app = express();
+const port = process.env.PORT || 4000;
+
+// ✅ Enable CORS
 app.use(cors({
-    origin:process.env.BASE_URL,
-    Credentials: true,
-    methods:['GET','POST','DELETE','OPTIONS'],
-    allowedHeaders:['Content-Type','Authorization']
-}
-))
+    origin: process.env.BASE_URL,
+    credentials: true,
+    methods: ['GET', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
-app.use(express.json())
-app.use(express.urlencoded({extended:true}))
+// ✅ Parse JSON and URL-encoded data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+// ✅ Sample route
 app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+    res.send('Hello World!');
+});
 
-//running database
-db()
+// ✅ Connect to DB
+db();
 
+// ✅ Start server
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-  console.log(process.env.PORT)
-})
+    console.log(`Server listening on port ${port}`);
+});
